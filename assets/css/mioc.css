@@ -1,0 +1,141 @@
+.show-grid [class^=dashboard-] {
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+}
+.nav-tree {
+  padding-left: 15px;
+}
+.nav-tree > li {
+  padding: 10px 15px 10px 20px;
+}
+.nav-tree > li .checkbox {
+  margin: 0;
+}
+.nav-tree > li:before {
+  position: absolute;
+  content: '';
+  top: 19px;
+  bottom: -19px;
+  left: -9px;
+  width: 2px;
+  background-color: #bdc3c7;
+  z-index: 1;
+}
+.nav-tree > li:after {
+  position: absolute;
+  content: '';
+  top: 19px;
+  left: -9px;
+  height: 2px;
+  width: 20px;
+  background-color: #bdc3c7;
+  z-index: 1;
+}
+.nav-tree > li:last-child:before {
+  display: none;
+}
+.nav-tree > li > a {
+  padding: 0;
+}
+.nav-tree .nav-tree-has-branch {
+  position: relative;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button {
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  left: -16px;
+  padding: 0;
+  margin: 0;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:not(:checked),
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:checked {
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:not(:checked) + .nav-tree-branch-button-indicator,
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:checked + .nav-tree-branch-button-indicator {
+  position: relative;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  display: block;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:not(:checked) + .nav-tree-branch-button-indicator:before,
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:checked + .nav-tree-branch-button-indicator:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: none;
+  background-color: #bdc3c7;
+  border-radius: 50%;
+  z-index: 2;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:not(:checked) + .nav-tree-branch-button-indicator:after,
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button > [type=checkbox]:checked + .nav-tree-branch-button-indicator:after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 3px;
+  height: 0px;
+  width: 10px;
+  border: 3px solid #2c3e50;
+  border-top: none;
+  border-left: none;
+  background-color: transparent;
+  transition: 200ms ease-in;
+  z-index: 2;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button [type=checkbox]:not(:checked) + .nav-tree-branch-button-indicator:after {
+  transform: rotate(0);
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch-button [type=checkbox]:checked + .nav-tree-branch-button-indicator:after {
+  transform: rotate(45deg);
+  height: 8px;
+  width: 8px;
+  top: 2px;
+  left: 4px;
+  border-width: 2px;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch {
+  margin-left: -15px;
+}
+.nav-tree .nav-tree-has-branch > .nav-tree-branch > li:before {
+  top: -11px;
+}
+#dashboard {
+  position: fixed;
+  top: 52px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#dashboard [class^=dashboard-] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+#dashboard .dashboard-left {
+  left: 0;
+  right: auto;
+}
+#dashboard .dashboard-center {
+  left: 25%;
+  right: 25%;
+}
+#dashboard .dashboard-right {
+  left: auto;
+  right: 0;
+}
+#main-map {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/*# sourceMappingURL=bootstrap-theme.css.map */

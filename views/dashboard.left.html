@@ -1,0 +1,17 @@
+<nav class="navbar">
+	<!--<div nav-tree nav-tree-data="vm.dataItem"></div>-->
+	<div ivh-treeview="vm.kmlLayer"
+		ivh-treeview-on-cb-change="vm.trvwLeafCheck(ivhNode, ivhIsSelected, ivhTree)"
+		ivh-treeview-default-selected-state="false">
+		<script type="text/ng-template">
+			<span ivh-treeview-toggle>
+				<span ivh-treeview-twistie></span>
+			</span>
+			<span ng-if="trvw.useCheckboxes()" ivh-treeview-checkbox></span>
+			<span class="ivh-treeview-node-label" ivh-treeview-toggle>
+				<span ng-click="$emit('trvw_leaf_click', node)">{{trvw.label(node)}}</span>
+			</span>
+			<div ivh-treeview-children></div>
+		</script>
+	</div>
+</nav>

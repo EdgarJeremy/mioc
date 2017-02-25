@@ -4,19 +4,21 @@
 			<li uib-dropdown class="dropup">
 				<a uib-dropdown-toggle href="#">Kota Manado</a>
 				<ul class="dropdown-menu" uib-dropdown-menu>
-					<li><a href="#">Manado</a></li>
+					<li ng-repeat="man in vm.kmlManado"><a href="#" ng-click="vm.kmlToggle(man)">{{man.label}}</a></li>
 				</ul>
 			</li>
 			<li uib-dropdown class="dropup">
 				<a uib-dropdown-toggle href="#">Kecamatan</a>
 				<ul class="dropdown-menu" uib-dropdown-menu>
-					<li><a href="#">Manado</a></li>
+					<li ng-repeat="kec in vm.kmlKecamatan">
+						<a href="#" ng-click="vm.kmlToggle(kec); vm.kmlToggleKec(kec)">{{kec.label}}</a>
+					</li>
 				</ul>
 			</li>
 			<li uib-dropdown class="dropup">
 				<a uib-dropdown-toggle href="#">Kelurahan</a>
 				<ul class="dropdown-menu" uib-dropdown-menu>
-					<li><a href="#">Manado</a></li>
+					<li ng-repeat="kel in vm.kmlKelurahan"><a href="#" ng-click="vm.kmlToggle(kel)">{{kel.label}}</a></li>
 				</ul>
 			</li>
 			<li uib-dropdown class="dropup">

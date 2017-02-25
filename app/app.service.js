@@ -3,17 +3,58 @@
 
 	angular
 		.module('mioc')
-		.factory('dataApi', dataApi);
+		.service('logger', logger)
+		.factory('dataApi', dataApi)
+		;
 
-	dataApi.inject = ['$http'];
-	function dataApi($http) {
+	logger.inject = ['$log'];
+	dataApi.inject = ['$http', 'logger'];
+
+	function logger($log) {
+		var vm = this;
+		vm.info = function (msg) { $log.info(msg); }
+		vm.warn = function (msg) { $log.warn(msg); }
+		vm.error = function (msg) { $log.error(msg); }
+		vm.debug = function (msg) { $log.debug(msg); }
+	}
+
+	function dataApi($http, logger) {
 		var dataApi = {
-			getDataMap: getDataMap
+			getDataKecamatan: getDataKecamatan,
+			getDataKelurahan: getDataKelurahan
 		};
+
+		var baseURL = 'http://laporan.manadokota.go.id/index.php/api'
 
 		return dataApi;
 
 		////////////////
-		function getDataMap() { }
+		function getDataKecamatan() {
+			return $http.get(baseURL + '/ambil_kecamatan')
+				.then(getSuccess)
+				.catch(getError('Gagal mengambil data Laporan'));
+		}
+		function getDataKelurahan(idKecamatan) {
+			return $http.get(baseURL + '/ambil_kelurahan/' + idKecamatan)
+				.then(getSuccess)
+				.catch(getError('Gagal mengambil data Laporan'));
+		}
+
+		///////////////
+
+		function getSuccess(response) {
+			console.log(response.data);
+
+			return response.data;
+		}
+
+		function getError(error){
+			return function (){
+				logger.error(error);
+				return {
+					success: false, message: error
+				}
+			}
+		}
 	}
 })();

@@ -141,16 +141,97 @@
 	
 	.dashboard-left {
 		left: 0;
-		right: auto;
+		right: 100%;
+		transition: right 200ms ease;
+
+		&.active {
+			right: 83.33333333%;
+		}
+
+		.dashboard-left-button {
+			cursor: pointer;
+			background-color: @flatWhite;
+			border-left: none;
+			height: 5rem;
+			width: 5rem;
+			position: absolute;
+			top: auto;
+			bottom: 0;
+			left: 100%;
+
+			&:after {
+				content: '';
+				height: 2rem;
+				width: 2rem;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				border: 0.8rem solid @flatDarkBlue;
+				border-right: none;
+				border-bottom: none;
+				margin-left: -0.3rem;
+				margin-top: -1rem;
+				transform: rotate(-45deg);
+			}
+
+			&:hover:after {
+				border-color: @flatBlue;
+			}
+		}
 	}
 	.dashboard-center {
-		left: 16.66666667%;
-		right: 16.66666667%;
+		left: 0%;
+		right: 0%;
 		bottom: 54px;
+		transition: right 200ms ease, left 200ms ease;
+
+		&.active-left {
+			left: 16.66666667%;
+		}
+		&.active-right {
+			right: 16.66666667%;
+		}
 	}
 	.dashboard-right {
-		left: auto;
+		left: 100%;
 		right: 0;
+		transition: left 200ms ease;
+
+		&.active {
+			left: 83.33333333%;
+		}
+
+		.dashboard-right-button {
+			cursor: pointer;
+			background-color: @flatWhite;
+			border-right: none;
+			height: 5rem;
+			width: 5rem;
+			position: absolute;
+			top: auto;
+			bottom: 0;
+			right: 100%;
+
+			&:after {
+				content: '';
+				height: 2rem;
+				width: 2rem;
+				position: absolute;
+				top: 50%;
+				right: 50%;
+				border: 0.8rem solid @flatDarkBlue;
+				border-top: none;
+				border-left: none;
+				margin-right: -0.3rem;
+				margin-top: -1rem;
+				transform: rotate(-45deg);
+
+			}
+
+			&:hover:after {
+				border-color: @flatBlue;
+			}
+		}
 	}
 	.dashboard-bottom {
 		left: 25%;

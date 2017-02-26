@@ -16,7 +16,6 @@
 							NgMap.getMap().then(function (map) {
 
 								$timeout(function () {
-									console.log(map);
 									google.maps.event.trigger(map, 'resize');
 								}, 250)	
 							})
@@ -27,7 +26,6 @@
 							NgMap.getMap().then(function (map) {
 
 								$timeout(function () {
-									console.log(map);
 									google.maps.event.trigger(map, 'resize');
 								}, 250)	
 							})

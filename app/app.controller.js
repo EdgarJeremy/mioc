@@ -37,6 +37,58 @@
 
 		vm.treeList = [];
 
+		vm.treeListFunc = function (baseURL, nama) {
+
+			var kmlLoadFunc = function (fileName) {
+				var kmlLayer = new google.maps.KmlLayer({
+					'url': baseURL + fileName
+				})
+
+				google.maps.event.addListener(kmlLayer, 'click', function(e){
+					console.log(e.featureData);
+				})
+
+				return kmlLayer;
+			}
+
+			vm.treeList = {
+				'group': [
+					{
+						'id': 1,
+						'label': 'Bangunan',
+						'kmlLayer': kmlLoadFunc(nama + '_bangunan.kmz')
+					}, {
+						'id': 2,
+						'label': 'Bidang Tanah',
+						'kmlLayer': kmlLoadFunc(nama + '_bidangtanah.kmz')
+					}, {
+						'id': 3,
+						'label': 'Jalan',
+						'kmlLayer': kmlLoadFunc(nama + '_jalan.kmz')
+					}, {
+						'id': 4,
+						'label': 'Lingkungan',
+						'kmlLayer': kmlLoadFunc(nama + '_lingkungan.kmz')
+					}
+				], 'group2': [
+					{
+						'id': 5,
+						'label': 'Penggunaan Lahan',
+						'kmlLayer': kmlLoadFunc(nama + '_penggunaanlahan.kmz')
+					}, {
+						'id': 6,
+						'label': 'Sempadan Jalan',
+						'kmlLayer': kmlLoadFunc(nama + '_sempadanjln.kmz')
+					}, {
+						'id': 7,
+						'label': 'Sempadan Sungai',
+						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
+					}
+				]
+			}
+			console.log(vm.treeList);
+		}
+
 		NgMap.getMap().then(function (map) {
 
 			var kmlLoadFunc = function (urls) {
@@ -44,6 +96,11 @@
 					// map: map,
 					url: src3 + urls
 				});
+
+				google.maps.event.addListener(kmlLayer, 'click', function(e){
+					console.log(e);
+					console.log(e.featureData);
+				})
 
 				return kmlLayer;
 			}
@@ -55,39 +112,7 @@
 				'kmlLayer': kmlLoadFunc('manado_batas.kmz')
 			})
 
-			vm.treeList = [];
-
-			vm.treeList.push(
-				{
-					'id': 1,
-					'label': 'Bangunan',
-					'kmlLayer': kmlLoadFunc('manado_bangunan.kmz')
-				}, {
-					'id': 2,
-					'label': 'Bidang Tanah',
-					'kmlLayer': kmlLoadFunc('manado_bidangtanah.kmz')
-				}, {
-					'id': 3,
-					'label': 'Jalan',
-					'kmlLayer': kmlLoadFunc('manado_jalan.kmz')
-				}, {
-					'id': 4,
-					'label': 'Lingkungan',
-					'kmlLayer': kmlLoadFunc('manado_lingkungan.kmz')
-				}, {
-					'id': 5,
-					'label': 'Penggunaan Lahan',
-					'kmlLayer': kmlLoadFunc('manado_penggunaanlahan.kmz')
-				}, {
-					'id': 6,
-					'label': 'Sempadan Jalan',
-					'kmlLayer': kmlLoadFunc('manado_sempadanjln.kmz')
-				}, {
-					'id': 7,
-					'label': 'Sempadan Sungai',
-					'kmlLayer': kmlLoadFunc('manado_sempadansungai.kmz')
-				}
-			)
+			vm.treeListFunc(src3, 'manado');
 
 		});
 
@@ -99,6 +124,7 @@
 			} else {
 				d1.kmlLayer.setMap(null);
 			}
+			console.log(d1);
 		})
 
 		var kmlLayerHidden = function (data) {
@@ -122,9 +148,11 @@
 				})
 			angular.forEach(vm.treeList,
 				function (val, key) {
-					if (val.kmlLayer != "") {
-						val.kmlLayer.setMap(null);
-					}
+					angular.forEach(val, function (v, k) {
+						if (v.kmlLayer != "") {
+							v.kmlLayer.setMap(null);
+						}
+					})
 				})
 
 		}
@@ -142,133 +170,66 @@
 
 				data.kmlLayer.setMap(map);
 
-				var urls_kota = 'http://laporan.manadokota.go.id/assets/geo/kota/';
-				var urls_kecamatan = 'http://laporan.manadokota.go.id/assets/geo/kecamatan/';
-				var urls_kelurahan = 'http://laporan.manadokota.go.id/assets/geo/kelurahan/';
+				var url_kota = 'http://laporan.manadokota.go.id/assets/geo/kota/';
+				var url_kecamatan = 'http://laporan.manadokota.go.id/assets/geo/kecamatan/';
+				var url_kelurahan = 'http://laporan.manadokota.go.id/assets/geo/kelurahan/';
 
 				vm.treeList = [];
 
 
 				if (data.type == 'kota') {
+
 					var kmlLoadFunc = function (urls) {
 						var kmlLayer = new google.maps.KmlLayer({
 							// map: map,
 							url: urls_kota + urls
 						});
 
+						google.maps.event.addListener(kmlLayer, 'click', function (e) {
+							console.log(e.featureData)
+						})
+
 						return kmlLayer;
 					}
-					vm.treeList.push(
-						{
-							'id': 1,
-							'label': 'Bangunan',
-							'kmlLayer': kmlLoadFunc(data.value + '_bangunan.kmz')
-						}, {
-							'id': 2,
-							'label': 'Bidang Tanah',
-							'kmlLayer': kmlLoadFunc(data.value + '_bidangtanah.kmz')
-						}, {
-							'id': 3,
-							'label': 'Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_jalan.kmz')
-						}, {
-							'id': 4,
-							'label': 'Lingkungan',
-							'kmlLayer': kmlLoadFunc(data.value + '_lingkungan.kmz')
-						}, {
-							'id': 5,
-							'label': 'Penggunaan Lahan',
-							'kmlLayer': kmlLoadFunc(data.value + '_penggunaanlahan.kmz')
-						}, {
-							'id': 6,
-							'label': 'Sempadan Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadanjln.kmz')
-						}, {
-							'id': 7,
-							'label': 'Sempadan Sungai',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadansungai.kmz')
-						}
-					)
+
+					vm.treeListFunc(url_kota, data.value);
+
 				} else if (data.type == 'kecamatan') {
+
 					var kmlLoadFunc = function (urls) {
 						var kmlLayer = new google.maps.KmlLayer({
 							// map: map,
 							url: urls_kecamatan + urls
 						});
 
+						google.maps.event.addListener(kmlLayer, 'click', function (e) {
+							console.log(e);
+							console.log(e.featureData);
+						})
+
 						return kmlLayer;
 					}
-					vm.treeList.push(
-						{
-							'id': 1,
-							'label': 'Bangunan',
-							'kmlLayer': kmlLoadFunc(data.value + '_bangunan.kmz')
-						}, {
-							'id': 2,
-							'label': 'Bidang Tanah',
-							'kmlLayer': kmlLoadFunc(data.value + '_bidangtanah.kmz')
-						}, {
-							'id': 3,
-							'label': 'Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_jalan.kmz')
-						}, {
-							'id': 4,
-							'label': 'Lingkungan',
-							'kmlLayer': kmlLoadFunc(data.value + '_lingkungan.kmz')
-						}, {
-							'id': 5,
-							'label': 'Penggunaan Lahan',
-							'kmlLayer': kmlLoadFunc(data.value + '_penggunaanlahan.kmz')
-						}, {
-							'id': 6,
-							'label': 'Sempadan Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadanjln.kmz')
-						}, {
-							'id': 7,
-							'label': 'Sempadan Sungai',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadansungai.kmz')
-						}
-					)
+
+					vm.treeListFunc(url_kecamatan, data.value);
+
+					console.log(vm.treeList)
 				} else {
+
 					var kmlLoadFunc = function (urls) {
 						var kmlLayer = new google.maps.KmlLayer({
 							// map: map,
 							url: urls_kelurahan + urls
 						});
 
+						google.maps.event.addListener(kmlLayer, 'click', function (e) {
+							console.log(e.featureData)
+						})
+
 						return kmlLayer;
 					}
-					vm.treeList.push(
-						{
-							'id': 1,
-							'label': 'Bangunan',
-							'kmlLayer': kmlLoadFunc(data.value + '_bangunan.kmz')
-						}, {
-							'id': 2,
-							'label': 'Bidang Tanah',
-							'kmlLayer': kmlLoadFunc(data.value + '_bidangtanah.kmz')
-						}, {
-							'id': 3,
-							'label': 'Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_jalan.kmz')
-						}, {
-							'id': 4,
-							'label': 'Lingkungan',
-							'kmlLayer': kmlLoadFunc(data.value + '_lingkungan.kmz')
-						}, {
-							'id': 5,
-							'label': 'Penggunaan Lahan',
-							'kmlLayer': kmlLoadFunc(data.value + '_penggunaanlahan.kmz')
-						}, {
-							'id': 6,
-							'label': 'Sempadan Jalan',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadanjln.kmz')
-						}, {
-							'id': 7,
-							'label': 'Sempadan Sungai',
-							'kmlLayer': kmlLoadFunc(data.value + '_sempadansungai.kmz')
-						}
-					)
+					
+					vm.treeListFunc(url_kelurahan, data.value);
+
 				}
 
 

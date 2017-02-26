@@ -240,8 +240,8 @@
 						'kmlLayer': kmlLoadFunc(nama + '_sempadanjln.kmz')
 					}, {
 						'id': 13,
-						'label': 'Sempadan Sungai',
-						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
+						'label': 'Ratio Kecamatan',
+						'kmlLayer': kmlLoadFunc(nama + '_Ratio_Kec.kmz')
 					}
 				]
 			}

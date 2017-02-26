@@ -35,5 +35,17 @@
 			</script>
 		</div>
 	</nav>
+	<h4 style="text-align: left; padding: 0 10px;">Group 4</h4>
+	<nav class="navbar">
+		<div ivh-treeview="vm.treeList.group3" ivh-treeview-on-cb-change="$emit('treeListToggle', ivhNode, ivhIsSelected)" ivh-treeview-default-selected-state="false">
+			<script type="text/ng-template">
+				<span ng-if="trvw.useCheckboxes()" ivh-treeview-checkbox></span>
+				<span class="ivh-treeview-node-label" ivh-treeview-toggle>
+					<span ng-click="$emit('treeListToggle', node)">{{trvw.label(node)}}</span>
+				</span>
+				<div ivh-treeview-children></div>
+			</script>
+		</div>
+	</nav>
 </div>
 <div class="dashboard-left-button"></div>

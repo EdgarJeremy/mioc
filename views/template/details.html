@@ -1,0 +1,41 @@
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">Informasi</h3>
+</div>
+<div class="modal-body table-berwarna" id="modal-body">
+	<table class="table table-strip table-bordered" ng-repeat="(dafkel_key, dafkel_val) in vm.data.itemData.daftar_kk">
+		<thead style="font-weight: bold; text-align: center;">
+			<tr>
+				<td colspan="8">{{dafkel_val['Nomor Kartu Keluarga']}}</td>
+			</tr>
+			<tr>
+				<td>NIK</td>
+				<td>Nama</td>
+				<td>Usia</td>
+				<td>Status Hubungan Keluarga</td>
+				<td>Agama</td>
+				<td>Pendidikan Terakhir</td>
+				<td>Pekerjaan</td>
+				<td>Foto</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="anggotakel in dafkel_val.anggota">
+				<td>{{anggotakel['NIK']}}</td>
+				<td>{{anggotakel['Nama']}}</td>
+				<td>{{anggotakel['Usia']}}</td>
+				<td>{{anggotakel['Status Hubungan Dalam Keluarga']}}</td>
+				<td>{{anggotakel['Agama']}}</td>
+				<td>{{anggotakel['Pendidikan Terakhir']}}</td>
+				<td>{{anggotakel['Pekerjaan']}}</td>
+				<td>
+					<div class="thumbnail">
+						<img style="height: 100px; width: 100px;" ng-src="{{anggotakel['Foto']}}" alt="">
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-warning" type="button" ng-click="vm.close()">Tutup</button>
+</div>

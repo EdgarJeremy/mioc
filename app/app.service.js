@@ -21,7 +21,8 @@
 	function dataApi($http, logger) {
 		var dataApi = {
 			getDataKecamatan: getDataKecamatan,
-			getDataKelurahan: getDataKelurahan
+			getDataKelurahan: getDataKelurahan,
+			getDataBangunan: getDataBangunan
 		};
 
 		var baseURL = 'http://laporan.manadokota.go.id/index.php/api'
@@ -36,6 +37,11 @@
 		}
 		function getDataKelurahan(idKecamatan) {
 			return $http.get(baseURL + '/ambil_kelurahan/' + idKecamatan)
+				.then(getSuccess)
+				.catch(getError('Gagal mengambil data Laporan'));
+		}
+		function getDataBangunan(idBangunan) {
+			return $http.get(baseURL + '/ambil_data_bangunan/' + idBangunan)
 				.then(getSuccess)
 				.catch(getError('Gagal mengambil data Laporan'));
 		}

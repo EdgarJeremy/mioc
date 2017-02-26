@@ -5,10 +5,12 @@
 		.module('mioc')
 		.controller('headerController', headerController)
 		.controller('dashboardController', dashboardController)
+		.controller('modalController', modalController)
 		;
 
 	headerController.inject = [];
-	dashboardController.inject = ['NgMap', 'dataApi', 'logger', '$scope', '$rootScope'];
+	dashboardController.inject = ['NgMap', 'dataApi', 'logger', '$scope', '$rootScope', '$http', '$uibModal'];
+	modalController.inject = ['$uibModal', '$uibModalInstance', 'modalData'];
 	function headerController() {
 		var vm = this;
 
@@ -21,7 +23,7 @@
 	}
 
 
-	function dashboardController(NgMap, dataApi, logger, $scope, $rootScope) {
+	function dashboardController(NgMap, dataApi, logger, $scope, $rootScope, $http, $uibModal) {
 		var vm = this;
 
 		var src = "http://edgarjeremy.com/folderbaru/kml/doc.kml";
@@ -37,6 +39,86 @@
 
 		vm.treeList = [];
 
+		var agama = [
+			'Islam',
+			'Kristen',
+			'Katolik',
+			'Hindu',
+			'Budha',
+			'Konghuchu'
+		]
+		var status_kawin = [
+			'Belum Kamin',
+			'Sudah Kamin',
+			'Cerai Hidup',
+			'Cerai Mati'
+		]
+		var jenis_kelamin = [
+			'Laki-Laki',
+			'Perempuan'
+		]
+
+		var status_pembayaran = [
+			'Belum',
+			'Sudah'
+		]
+
+		var status_hubkel = [
+			'Kepala Keluarga',
+			'Suami',
+			'Istri',
+			'Anak',
+			'Menantu',
+			'Cucu',
+			'Orang Tua',
+			'Mertua',
+			'Familiar',
+			'Pembantu',
+			'Lainnya',
+		]
+
+		var pend_terakhir = [
+			'Tidak/ Belum Sekolah',
+			'Belum Tamat SD/ Sederajat',
+			'Tamat SD/ Sederajat',
+			'SLTP/ Sederajat',
+			'Diploma I',
+			'Diploma II',
+			'Strata I',
+			'Strata II',
+			'Strata III'
+		]
+
+		vm.windowDetails =
+			{
+				'daftar_kk': [
+					{
+						'Nomor Kartu Keluarga': undefined,
+						'anggota': [
+							{
+								'Nama': undefined,
+								'Tempat/Tgl Lahir': undefined,
+								'Jenis Kelamin': undefined,
+								'Alamat': undefined,
+								'Agama': undefined,
+								'Status Perkawinan': undefined,
+								'Pekerjaan': undefined
+							}
+						]
+					}
+				],
+				'sppt': {
+					'NOP': undefined,
+					'Nama Wajib Pajak': undefined,
+					'Luas Bumi': undefined,
+					'Luas Bangunan': undefined,
+					'Tahun Pajak': undefined,
+					'Gambar': undefined,
+					'Status Pembayaran': undefined
+				}
+			}
+			;
+
 		vm.treeListFunc = function (baseURL, nama) {
 
 			var kmlLoadFunc = function (fileName) {
@@ -44,8 +126,57 @@
 					'url': baseURL + fileName
 				})
 
-				google.maps.event.addListener(kmlLayer, 'click', function(e){
-					console.log(e.featureData);
+				google.maps.event.addListener(kmlLayer, 'click', function (e) {
+					vm.windowDetails = {
+						'daftar_kk': [],
+						'sppt': undefined
+					};
+					dataApi.getDataBangunan(e.featureData.name).then(function (response) {
+						// console.log(response);	
+						vm.windowDetails.jumlah_kk = response.daftar_kk.length;
+						vm.windowDetails.jumlah_anggota = 0;
+						angular.forEach(response.daftar_kk, function (val, key) {
+							vm.windowDetails.daftar_kk.push(
+								{
+									'Nomor Kartu Keluarga': val.NIK_KK,
+									'Nama Kepala Keluarga': val.NAMA_KEP,
+									'anggota': []
+								}
+							)
+							console.log(val);
+							vm.windowDetails.jumlah_anggota += val.anggota.length
+							angular.forEach(val.anggota, function (values, keys) {
+								vm.windowDetails.daftar_kk[key].anggota.push(
+									{
+										'Nama': values.NAMA_LGKP,
+										'NIK': values.NIK,
+										'Usia': new Date().getFullYear() - new Date(values.TGL_LHR).getFullYear(),
+										'Status Hubungan Dalam Keluarga': status_hubkel[(values.STAT_HBKEL - 1)],
+										'Pendidikan Terakhir': pend_terakhir[(values.PDDK_AKH - 1)],
+										'Pekerjaan': 'Swasta',
+										'Tempat/Tgl Lahir': values.TGL_LHR,
+										'Jenis Kelamin': jenis_kelamin[(values.JENIS_KLMIN - 1)],
+										'Alamat': val.ALAMAT,
+										'Agama': agama[(values.AGAMA - 1)],
+										'Status Perkawinan': status_kawin[(values.STAT_KWN - 1)],
+										'Foto': 'http://laporan.manadokota.go.id/assets/geo/foto_bio/' + values.PAS_FOTO
+									}
+								)
+							})
+						})
+						vm.windowDetails.sppt =
+							{
+								'NOP': response.sppt.NOP,
+								'Nama Wajib Pajak': response.sppt.NM_WP_SPPT,
+								'Luas Bumi': response.sppt.LUAS_BUMI_SPPT,
+								'Luas Bangunan': response.sppt.LUAS_BNG_SPPT,
+								'Tahun Pajak': response.sppt.THN_PAJAK_SPPT,
+								'Gambar': 'http://laporan.manadokota.go.id/assets/geo/foto_bangunan/' + response.sppt.FOTO_BANGUNAN,
+								'Status Pembayaran': (response.sppt.STATUS_PEMBAYARAN_SPPT == 1) ? "Sudah Membayar" : "Belum Membayar"
+							}
+						console.log(vm.windowDetails)
+
+					})
 				})
 
 				return kmlLayer;
@@ -56,11 +187,11 @@
 					{
 						'id': 1,
 						'label': 'Bangunan',
-						'kmlLayer': kmlLoadFunc(nama + '_bangunan.kmz')
+						'kmlLayer': kmlLoadFunc(nama + '_bangunan1.kmz')
 					}, {
 						'id': 2,
 						'label': 'Bidang Tanah',
-						'kmlLayer': kmlLoadFunc(nama + '_bidangtanah.kmz')
+						'kmlLayer': kmlLoadFunc(nama + '_bidangtanah1.kmz')
 					}, {
 						'id': 3,
 						'label': 'Jalan',
@@ -91,19 +222,28 @@
 
 		NgMap.getMap().then(function (map) {
 
-			var kmlLoadFunc = function (urls) {
+			var kmlLoadFunc = function (fileName) {
 				var kmlLayer = new google.maps.KmlLayer({
-					// map: map,
-					url: src3 + urls
-				});
+					'url': src3 + fileName
+				})
 
-				google.maps.event.addListener(kmlLayer, 'click', function(e){
-					console.log(e);
+				google.maps.event.addListener(kmlLayer, 'click', function (e) {
 					console.log(e.featureData);
+					console.log('bijon', $http);
+					$scope.$apply(function () {
+						console.log($http);
+						dataApi.getDataBangunan(100).then(function (response) {
+							console.log(response);
+						})
+						$http.get('http://laporan.manadokota.go.id/index.php/api/ambil_data_bangunan/100').then(function (res) {
+							console.log(res)
+						})
+					})
 				})
 
 				return kmlLayer;
 			}
+
 			vm.kmlManado.push({
 				'id': 1,
 				'label': 'Kota Manado',
@@ -157,11 +297,6 @@
 
 		}
 
-		vm.windowDetails = {
-			'id': undefined,
-			'label': undefined
-		};
-
 		vm.kmlToggle = function (data) {
 
 			NgMap.getMap().then(function (map) {
@@ -179,55 +314,15 @@
 
 				if (data.type == 'kota') {
 
-					var kmlLoadFunc = function (urls) {
-						var kmlLayer = new google.maps.KmlLayer({
-							// map: map,
-							url: urls_kota + urls
-						});
-
-						google.maps.event.addListener(kmlLayer, 'click', function (e) {
-							console.log(e.featureData)
-						})
-
-						return kmlLayer;
-					}
-
 					vm.treeListFunc(url_kota, data.value);
 
 				} else if (data.type == 'kecamatan') {
-
-					var kmlLoadFunc = function (urls) {
-						var kmlLayer = new google.maps.KmlLayer({
-							// map: map,
-							url: urls_kecamatan + urls
-						});
-
-						google.maps.event.addListener(kmlLayer, 'click', function (e) {
-							console.log(e);
-							console.log(e.featureData);
-						})
-
-						return kmlLayer;
-					}
 
 					vm.treeListFunc(url_kecamatan, data.value);
 
 					console.log(vm.treeList)
 				} else {
 
-					var kmlLoadFunc = function (urls) {
-						var kmlLayer = new google.maps.KmlLayer({
-							// map: map,
-							url: urls_kelurahan + urls
-						});
-
-						google.maps.event.addListener(kmlLayer, 'click', function (e) {
-							console.log(e.featureData)
-						})
-
-						return kmlLayer;
-					}
-					
 					vm.treeListFunc(url_kelurahan, data.value);
 
 				}
@@ -236,11 +331,11 @@
 			})
 
 		};
-
 		vm.kmlToggleKec = function (data) {
 			dataApi.getDataKelurahan(data.id).then(function (response) {
 
 				NgMap.getMap().then(function (map) {
+
 
 					vm.kmlKelurahan = [];
 
@@ -274,8 +369,22 @@
 			})
 		}
 
-		vm.kmlToggleKel = function (data) {
-
+		vm.openModalDetails = function (itemData) {
+			var modalInstance = $uibModal.open({
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/template/details.html',
+				controller: 'modalController',
+				controllerAs: 'vm',
+				size: 'lg',
+				resolve: {
+					modalData: function () {
+						return {
+							itemData: itemData
+						};
+					}
+				}
+			});
 		}
 
 		// $scope.$watch(function(){
@@ -328,6 +437,24 @@
 
 
 		}
+	}
+	
+	function modalController($uibModal,$uibModalInstance, modalData) {
+		var vm = this;
+
+		vm.data = modalData;
+		
+		vm.close = function(){
+			$uibModalInstance.dismiss()
+		}
+
+		console.log(modalData);
+
+		activate();
+
+		////////////////
+
+		function activate() { }
 	}
 
 })();

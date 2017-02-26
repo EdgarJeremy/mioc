@@ -5,12 +5,12 @@
 
 ////////////////////////
 
-.show-grid {
-	& [class^=dashboard-] {
-		background-color: @flatWhite;
-		border: 1px solid @flatSilver;
-	}
-}
+// .show-grid {
+// 	& [class^=dashboard-] {
+// 		background-color: @flatWhite;
+// 		border: 1px solid @flatSilver;
+// 	}
+// }
 
 .nav-tree {
 	padding-left: 15px;
@@ -108,9 +108,9 @@
 						height: 8px;
 						width: 8px;
 						top: 2px; left: 4px;
-						border-width: 2px;
 					}
 				}
+						border-width: 2px;
 			}
 		}
 		> .nav-tree-branch {
@@ -122,6 +122,65 @@
 				}
 			}
 		}
+	}
+}
+
+.ivh-treeview {
+	.ivh-treeview-node {
+		padding: 10px 15px;
+
+		label.ivh-treeview-checkbox-appearance {
+			position: relative;
+			.square(2rem);
+			margin-bottom: -5px;
+
+			.ivh-treeview-checkbox[type=checkbox]:not(:checked),
+			.ivh-treeview-checkbox[type=checkbox]:checked {
+				visibility: hidden;
+				position: absolute;
+				left: -9999px;
+
+				+ span {
+					display: block;
+					position: absolute;
+					top: 0; left: 0; right: 0; bottom: 0;
+					background-color: transparent;
+					border: 3px solid white;
+					border-radius: 2px;
+					cursor: pointer;
+
+					&:after {
+						content: "";
+						display: none;
+						position: absolute;
+						top: 2px; left: 2px;
+						border: 3px solid white;
+						border-top: none;
+						border-right: none;
+						height: 7px; width: 10px;
+						transform: rotate(-45deg);
+					}
+
+					&:active {
+						transform: scale(0.9);
+					}
+				}
+			}
+
+			.ivh-treeview-checkbox[type=checkbox]:checked {
+				+ span {
+					&:after {
+						display: block;
+					}
+				}
+			}
+		}
+
+
+		&:hover {
+			background-color: lighten(@flatDarkBlue, 10%);
+		}
+
 	}
 }
 
@@ -137,12 +196,15 @@
 		position: absolute;
 		top: 0;
 		bottom: 0;
+		background-color: transparent;
 	}
 	
 	.dashboard-left {
 		left: 0;
 		right: 100%;
 		transition: right 200ms ease;
+		background-color: @flatDarkBlue;
+		color: white;
 
 		.dashboard-side-overlay {
 			overflow: hidden;
@@ -154,7 +216,7 @@
 
 			.dashboard-left-button {
 				&:after {
-					margin-right: -0.3rem;
+					margin-left: -0.8rem;
 					transform: rotate(-45deg);
 				}
 			}
@@ -162,7 +224,7 @@
 
 		.dashboard-left-button {
 			cursor: pointer;
-			background-color: @flatWhite;
+			background-color: @flatDarkBlue;
 			border-left: none;
 			height: 5rem;
 			width: 5rem;
@@ -178,7 +240,7 @@
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				border: 0.8rem solid @flatDarkBlue;
+				border: 0.8rem solid white;
 				border-right: none;
 				border-bottom: none;
 				margin-left: -1.3rem;
@@ -208,9 +270,11 @@
 		left: 100%;
 		right: 0;
 		transition: left 200ms ease;
+		background-color: @flatDarkBlue;
+		color: white;
 
 		.dashboard-side-overlay {
-			overflow: hidden;
+			overflow-x: hidden;
 			width: 100%;
 		}
 
@@ -219,7 +283,7 @@
 
 			.dashboard-right-button {
 				&:after {
-				margin-right: -0.3rem;
+				margin-right: -0.8rem;
 				transform: rotate(-45deg);
 				}
 			}
@@ -227,7 +291,7 @@
 
 		.dashboard-right-button {
 			cursor: pointer;
-			background-color: @flatWhite;
+			background-color: @flatDarkBlue;
 			border-right: none;
 			height: 5rem;
 			width: 5rem;
@@ -243,7 +307,7 @@
 				position: absolute;
 				top: 50%;
 				right: 50%;
-				border: 0.8rem solid @flatDarkBlue;
+				border: 0.8rem solid white;
 				border-top: none;
 				border-left: none;
 				margin-top: -1rem;
@@ -282,6 +346,15 @@
 				}
 			}
 		}
+	}
+}
+
+.table-berwarna {
+	.table:nth-child(odd) {
+		background-color: lighten(@flatRed, 50%);
+	}
+	.table:nth-child(even) {
+		background-color: lighten(@flatBlue, 50%);
 	}
 }
 

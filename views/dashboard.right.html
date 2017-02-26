@@ -1,14 +1,50 @@
-<div class="dahsboard-side-overlay">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h2>{{vm.windowDetails.label}}</h2>
-		</div>
-		<table class="table table-striped table-bordered">
-			<tr ng-repeat="(key, value) in vm.windowDetails">
-				<td>{{key}}</td>
-				<td>{{value}}</td>
-			</tr>
-		</table>
-	</div>
+<div class="dashboard-side-overlay">
+	<table class="table">
+		<tr>
+			<td>Nomor Obyek Pajak</td>
+			<td>{{vm.windowDetails.sppt['NOP']}}</td>
+		</tr>
+		<tr>
+			<td>Nama Wajib Pajak</td>
+			<td>{{vm.windowDetails.sppt['Nama Wajib Pajak']}}</td>
+		</tr>
+		<tr>
+			<td>Luas Bangunan</td>
+			<td>{{vm.windowDetails.sppt['Luas Bangunan']}} m<sup>2</sup></td>
+		</tr>
+		<tr>
+			<td>Luas Bumi</td>
+			<td>{{vm.windowDetails.sppt['Luas Bumi']}} m<sup>2</sup></td>
+		</tr>
+		<tr>
+			<td>Tahun Pajak</td>
+			<td>{{vm.windowDetails.sppt['Tahun Pajak']}}</td>
+		</tr>
+		<tr>
+			<td>Status Pembayaran</td>
+			<td>{{vm.windowDetails.sppt['Status Pembayaran']}}</td>
+		</tr>
+	</table>
+	<table class="table">
+		<tr>
+			<td>Jumlah Keluarga</td>
+			<td>{{vm.windowDetails.jumlah_kk}}</td>
+		</tr>
+		<tr>
+			<td>Jumlah Anggota Keluarga</td>
+			<td>{{vm.windowDetails.jumlah_anggota}} Orang</td>
+		</tr>
+		<tr>
+			<td colspan="2">Foto Bangunan</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="thumbnail">
+					<img ng-src="{{vm.windowDetails.sppt['Gambar']}}"/>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<a class="btn btn-default btn-block btn-lg" ng-click="vm.openModalDetails(vm.windowDetails)">Details</a>
 </div>
 <div class="dashboard-right-button"></div>

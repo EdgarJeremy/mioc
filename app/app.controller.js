@@ -218,8 +218,8 @@
 				], 'group3': [
 					{
 						'id': 8,
-						'label': 'Penyebaran Penduduk',
-						'kmlLayer': kmlLoadFunc(nama + '_penyebaranpenduduk.kmz')
+						'label': 'Status PBB 2016',
+						'kmlLayer': kmlLoadFunc(nama + '_statusPBB2016.kmz')
 					}, {
 						'id': 9,
 						'label': 'Sempadan Jalan',

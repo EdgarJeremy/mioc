@@ -215,6 +215,20 @@
 						'label': 'Sempadan Sungai',
 						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
 					}
+				], 'group3': [
+					{
+						'id': 8,
+						'label': 'Penyebaran Penduduk',
+						'kmlLayer': kmlLoadFunc(nama + '_penyebaranpenduduk.kmz')
+					}, {
+						'id': 9,
+						'label': 'Sempadan Jalan',
+						'kmlLayer': kmlLoadFunc(nama + '_sempadanjln.kmz')
+					}, {
+						'id': 10,
+						'label': 'Sempadan Sungai',
+						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
+					}
 				]
 			}
 			console.log(vm.treeList);

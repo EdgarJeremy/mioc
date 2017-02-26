@@ -220,28 +220,12 @@
 						'id': 8,
 						'label': 'Status PBB 2016',
 						'kmlLayer': kmlLoadFunc(nama + '_statusPBB2016.kmz')
-					}, {
-						'id': 9,
-						'label': 'Sempadan Jalan',
-						'kmlLayer': kmlLoadFunc(nama + '_sempadanjln.kmz')
-					}, {
-						'id': 10,
-						'label': 'Sempadan Sungai',
-						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
 					}
 				], 'group4': [
 					{
 						'id': 11,
 						'label': 'Penyebaran Penduduk',
 						'kmlLayer': kmlLoadFunc(nama + '_penyebaranpenduduk.kmz')
-					}, {
-						'id': 12,
-						'label': 'Sempadan Jalan',
-						'kmlLayer': kmlLoadFunc(nama + '_sempadanjln.kmz')
-					}, {
-						'id': 13,
-						'label': 'Ratio Kecamatan',
-						'kmlLayer': kmlLoadFunc(nama + '_Ratio_Kec.kmz')
 					}
 				]
 			}

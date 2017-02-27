@@ -226,10 +226,6 @@
 						'id': 9,
 						'label': 'Penyebaran Penduduk',
 						'kmlLayer': kmlLoadFunc(nama + '_Ratio_Kec.kmz')
-					};{
-						'id': 10,
-						'label': 'Kepadatan Penduduk',
-						'kmlLayer': kmlLoadFunc(nama + '_kepadatan.kmz')
 					}
 				]
 			}

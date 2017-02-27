@@ -223,7 +223,7 @@
 					}
 				], 'group4': [
 					{
-						'id': 11,
+						'id': 9,
 						'label': 'Penyebaran Penduduk',
 						'kmlLayer': kmlLoadFunc(nama + '_penyebaranpenduduk.kmz')
 					}

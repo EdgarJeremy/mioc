@@ -225,7 +225,7 @@
 					{
 						'id': 9,
 						'label': 'Penyebaran Penduduk',
-						'kmlLayer': kmlLoadFunc(nama + '_penyebaranpenduduk.kmz')
+						'kmlLayer': kmlLoadFunc(nama + '_Ratio_Kec.kmz')
 					}
 				]
 			}

@@ -183,7 +183,7 @@
 			}
 
 			vm.treeList = {
-				'Data Dasar': [
+				'Group': [
 					{
 						'id': 1,
 						'label': 'Bangunan',
@@ -201,7 +201,7 @@
 						'label': 'Lingkungan',
 						'kmlLayer': kmlLoadFunc(nama + '_lingkungan.kmz')
 					}
-				], 'Tematik Ruang': [
+				], 'Group2': [
 					{
 						'id': 5,
 						'label': 'Penggunaan Lahan',
@@ -215,13 +215,13 @@
 						'label': 'Sempadan Sungai',
 						'kmlLayer': kmlLoadFunc(nama + '_sempadansungai.kmz')
 					}
-				], 'Tematik PBB': [
+				], 'Group3': [
 					{
 						'id': 8,
 						'label': 'Status PBB 2016',
 						'kmlLayer': kmlLoadFunc(nama + '_status_pbb.kmz')
 					}
-				], 'Tematik Demografi': [
+				], 'Group4': [
 					{
 						'id': 9,
 						'label': 'Penyebaran Penduduk',

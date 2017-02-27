@@ -219,7 +219,7 @@
 					{
 						'id': 8,
 						'label': 'Status PBB 2016',
-						'kmlLayer': kmlLoadFunc(nama + '_statusPBB2016.kmz')
+						'kmlLayer': kmlLoadFunc(nama + '_status_pbb.kmz')
 					}
 				], 'group4': [
 					{

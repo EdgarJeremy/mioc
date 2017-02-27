@@ -150,7 +150,7 @@
 									{
 										'Nama': values.NAMA_LGKP,
 										'NIK': values.NIK,
-										'Usia': new Date().getFullYear() - new Date(values.TGL_LHR).getFullYear(),
+										'Usia': new Date().getFullYear() || values.TGL_LHR.split("-")[2] - new Date(values.TGL_LHR).getFullYear(),
 										'Status Hubungan Dalam Keluarga': status_hubkel[(values.STAT_HBKEL - 1)],
 										'Pendidikan Terakhir': pend_terakhir[(values.PDDK_AKH - 1)],
 										'Pekerjaan': 'Swasta',
